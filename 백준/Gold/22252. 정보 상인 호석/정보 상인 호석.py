@@ -18,12 +18,12 @@ for i in range(n):
         go[s[1]].extend(list(map(int,s[3:])))
         # 리스트 정렬
         go[s[1]].sort()
-        
+
     # 호석이가 정보를 사감
     else:
         # 호석이가 사갈 수 있는 정보의 개수
         k = min(len(go[s[1]]),int(s[2]))
-        for _ in range(k):
-            ans += go[s[1]].pop()
+        ans += sum(go[s[1]][-k:])
+        go[s[1]] = go[s[1]][:-k]
 
 print(ans)
