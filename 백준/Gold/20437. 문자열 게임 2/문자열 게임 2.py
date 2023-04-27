@@ -2,8 +2,7 @@ from collections import defaultdict
 import sys
 input = sys.stdin.readline
 
-t = int(input())
-for _ in range(t):
+def sol():
     s = input() # 문자열
     k = int(input())
     ans = [] # 문자열의 길이를 담을 리스트
@@ -27,3 +26,7 @@ for _ in range(t):
         print(min(ans),max(ans))
     else:
         print(-1)
+
+t = int(input())
+for _ in range(t):
+    sol()
