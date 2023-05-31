@@ -1,17 +1,13 @@
 def solution(skill, skill_trees):
-    ans = 0
-    for skill_tree in skill_trees:
-        can_do = True
-        for i in range(len(skill_tree)):
-            idx = skill.find(skill_tree[i])
-            if idx <= 0:
-                continue
-            for s in skill[:idx]:
-                if s not in skill_tree[:i]:
-                    can_do = False
-                    break
-            if not can_do:
+    answer = 0
+    start = skill[0]
+    skill = {skill[i]:skill[i-1] for i in range(len(skill)-1,0,-1)}
+    for s in skill_trees:
+        temp = set()
+        for x in s:
+            if x in skill and skill[x] not in temp:
                 break
+            temp.add(x)
         else:
-            ans += 1
-    return ans
+            answer += 1
+    return answer
