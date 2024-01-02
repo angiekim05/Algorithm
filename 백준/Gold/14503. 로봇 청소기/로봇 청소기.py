@@ -3,35 +3,28 @@ input = sys.stdin.readline
 n,m = map(int,input().split())
 r,c,d = map(int,input().split())
 area = [list(map(int,input().split())) for _ in range(n)]
-direction = ((-1,0),(0,1),(1,0),(0,-1))
-clean_area = 1
-cleaned = [[0]*m for _ in range(n)]
-current = [(r,c,d)]
-cleaned[r][c] = 1
+dx = [-1,0,1,0]
+dy = [0,1,0,-1]
 
-while current:
-    x, y, d = current.pop()
+def cleaner(x,y,d):
+    # 현재칸 청소
+    cnt = 1
+    area[x][y] = -1
+    while True:
+        # 반시계 방향으로 회전하며 청소하지 않은 칸 탐색
+        for _ in range(4):
+            d = (d - 1) % 4
+            nx,ny = x+dx[d], y+dy[d]
+            if area[nx][ny] == 0: # 청소 안한 칸
+                area[nx][ny] = -1
+                cnt += 1
+                x,y = nx,ny
+                break # 청소했으면 다시 1번으로 돌아감
 
-    for i in range(1,5):
-        nd = (d - i) % 4
-        nx, ny = x + direction[nd][0], y + direction[nd][1]
+        else:
+            # 청소 못했으면 후진하거나 멈추거나
+            x,y = x+dx[d]*(-1), y+dy[d]*(-1)
+            if area[x][y] == 1: # 벽이라면 작동 멈춤
+                return cnt
 
-        if nx < 1 or ny < 1 or nx >= n or ny >= m:
-            continue
-        if area[nx][ny] or cleaned[nx][ny]:
-            continue
-        current.append((nx,ny,nd))
-        cleaned[nx][ny] = 1
-        clean_area += 1
-        break
-
-    else:
-        nx, ny = x + direction[d-2][0], y + direction[d-2][1]
-        if nx < 0 or ny < 0 or nx >= n or ny >= m:
-            continue
-        if area[nx][ny]:
-            continue
-        current.append((nx,ny,d))
-        cleaned[nx][ny] = 1
-
-print(clean_area)
+print(cleaner(r,c,d))
