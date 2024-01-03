@@ -1,29 +1,27 @@
-# 방향마다 갈 수 있는 곳이 한정되어 있음 -> 방향에 따라 경우의 수 따로 담음
-import sys
-input = sys.stdin.readline
 n = int(input())
 wall = [list(map(int,input().split())) for _ in range(n)]
-dp = [[[0] * n for _ in range(n)] for _ in range(3)]
-dp[0][0][1] = 1 # 맨 처음 시작
+dp = [[[0]*3 for _ in range(n)] for _ in range(n)]
+# dp[row][col][dir]
+dp[0][1][0] = 1 # 초기 위치
 
-for j in range(2,n): # 첫번째 줄은 모두 오른쪽으로 이동 가능
-    if not wall[0][j]:
-        dp[0][0][j] = dp[0][0][j-1] # 끊겼을 때는 더이상 이동 불가능
+for i in range(n):
+    for j in range(1,n):
+        if wall[i][j]:
+            continue
 
-for i in range(1,n):
-    for j in range(2,n): # 오른쪽 방향에서 바로 아래 방향으로 갈 수 없음으로 무조건 3번째 열 미만에는 갈 수 없음
-        # 이 칸에 도착할 수 있다면
-        if wall[i][j] == 0:
-            # 오른쪽 이동으로 왔다면 이전에 오른쪽/대각선으로 도착한 경우의 수를 더해줌
-            dp[0][i][j] = dp[0][i][j-1]+dp[2][i][j-1]
+        # 오른쪽 이동 : 오른쪽 -> 오른쪽 / 대각선 -> 오른쪽
+        dp[i][j][0] += dp[i][j-1][0] + dp[i][j-1][2]
 
-            # 아래쪽 이동으로 왔다면 이전에 아래쪽/대각선으로 도착한 경우의 수를 더해줌
-            dp[1][i][j] = dp[1][i-1][j]+dp[2][i-1][j]
-            
-            # 대각선 이동으로 이 칸에 도착할 수 있다면
-            if wall[i-1][j] == wall[i][j-1] == 0:
-                # 이전칸에 오른쪽/아래쪽/대각선으로 도착한 경우의 수를 더해줌
-                dp[2][i][j] = dp[0][i-1][j-1]+dp[1][i-1][j-1]+dp[2][i-1][j-1]
+        if i-1 < 0:
+            continue
+        # 아래쪽 이동 : 아래쪽 -> 아래쪽 / 대각선 -> 아래쪽
+        dp[i][j][1] += dp[i-1][j][1] + dp[i-1][j][2]
 
-# 마지막칸에 세가지 방향으로 도착 가능한 경우의 수 모두 합해줌
-print(dp[0][-1][-1]+dp[1][-1][-1]+dp[2][-1][-1])
+        if j-1 < 0:
+            continue
+        if wall[i-1][j] or wall[i][j-1]:
+            continue
+        # 대각선 이동 : 모든 경우 -> 대각선
+        dp[i][j][2] += dp[i-1][j-1][0] + dp[i-1][j-1][1] + dp[i-1][j-1][2]
+
+print(sum(dp[n-1][n-1]))
