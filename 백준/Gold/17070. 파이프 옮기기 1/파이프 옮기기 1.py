@@ -17,8 +17,6 @@ for i in range(n):
         # 아래쪽 이동 : 아래쪽 -> 아래쪽 / 대각선 -> 아래쪽
         dp[i][j][1] += dp[i-1][j][1] + dp[i-1][j][2]
 
-        if j-1 < 0:
-            continue
         if wall[i-1][j] or wall[i][j-1]:
             continue
         # 대각선 이동 : 모든 경우 -> 대각선
