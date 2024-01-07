@@ -1,8 +1,12 @@
 import sys
 input = sys.stdin.readline
-n,m = map(int,input().split())
-while n != 0 and m != 0:
+while True:
+    n, m = map(int, input().split())
+    if n + m == 0:
+        break
     sang = set([int(input()) for _ in range(n)])
-    sun = set([int(input()) for _ in range(n)])
-    print(len(sang & sun))
-    n,m = map(int,input().split())
+    ans = 0
+    for _ in range(m):
+        if int(input()) in sang:
+            ans += 1
+    print(ans)
