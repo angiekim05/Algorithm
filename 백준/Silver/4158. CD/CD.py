@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+print = sys.stdout.write
 res = []
 while True:
     n, m = map(int, input().split())
