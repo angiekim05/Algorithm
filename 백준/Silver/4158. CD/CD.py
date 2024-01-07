@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+res = []
 while True:
     n, m = map(int, input().split())
     if n + m == 0:
@@ -9,4 +10,5 @@ while True:
     for _ in range(m):
         if int(input()) in sang:
             ans += 1
-    print(ans)
+    res.append(str(ans))
+print("\n".join(res))
