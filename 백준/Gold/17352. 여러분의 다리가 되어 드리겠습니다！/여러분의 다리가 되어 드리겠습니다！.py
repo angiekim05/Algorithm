@@ -3,7 +3,6 @@ input = sys.stdin.readline
 
 n = int(input())
 parents = list(range(n+1))
-parents[0] = 1
 
 def find(x):
     if x == parents[x]:
