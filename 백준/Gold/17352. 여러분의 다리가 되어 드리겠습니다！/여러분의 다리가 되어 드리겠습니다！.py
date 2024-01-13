@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+
 n = int(input())
 parents = list(range(n+1))
 parents[0] = 1
@@ -13,7 +14,7 @@ def find(x):
 def union(x,y):
     x = find(x)
     y = find(y)
-    
+
     if x < y:
         parents[y] = x
     else:
@@ -22,9 +23,8 @@ def union(x,y):
 for _ in range(n-2):
     s,e = map(int,input().split())
     union(s,e)
-    
-for i in range(n):
-    find(i)
-    
-res = list(set(parents))
-print(res[0],res[1])
+
+for i in range(2,n+1):
+    if find(1) != find(i):
+        print(1,i)
+        break
