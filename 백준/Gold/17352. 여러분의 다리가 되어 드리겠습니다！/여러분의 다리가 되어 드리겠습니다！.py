@@ -1,3 +1,5 @@
+import sys
+input = sys.stdin.readline
 n = int(input())
 parents = list(range(n+1))
 parents[0] = 1
@@ -20,7 +22,9 @@ def union(x,y):
 for _ in range(n-2):
     s,e = map(int,input().split())
     union(s,e)
+    
 for i in range(n):
     find(i)
+    
 res = list(set(parents))
 print(res[0],res[1])
