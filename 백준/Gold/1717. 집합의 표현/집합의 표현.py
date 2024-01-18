@@ -6,10 +6,9 @@ n,m = map(int,input().split())
 group = list(range(n+1))
 
 def find(x):
-    a = x
-    while group[a] != a:
-        a = group[a]
-    group[x] = a
+    if group[x] == x:
+        return x
+    group[x] = find(group[x])
     return group[x]
 
 def union(x,y):
