@@ -18,13 +18,17 @@ def union(x,y):
         group[y] = x
     else:
         group[x] = y
-
-for _ in range(m):
-    p,a,b = map(int,input().split())
-    if p == 0:
-        union(a,b)
-    else:
-        if find(a) == find(b):
-            print("YES")
+def sol():
+    res = []
+    for _ in range(m):
+        p,a,b = map(int,input().split())
+        if p == 0:
+            union(a,b)
         else:
-            print("NO")
+            if find(a) == find(b):
+                res.append("YES")
+            else:
+                res.append("NO")
+    print(*res,sep="\n")
+
+sol()
