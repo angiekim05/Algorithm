@@ -16,7 +16,14 @@ def summation(dice,case,n):
 def winner(case, countercase):
     win = 0
     for x in case:
-            win += bisect_left(countercase, x)
+        s,e = 0,len(countercase)-1
+        while s<=e:
+            mid = (s+e)//2
+            if x <= countercase[mid]:
+                e = mid-1
+            else:
+                s = mid +1
+        win += s
     return win
 
 def solution(dice):
