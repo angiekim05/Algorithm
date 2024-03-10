@@ -4,8 +4,6 @@ def solution(nodeinfo):
     answer = [[],[]]
 
     def sol(l):
-        if len(l) == 0:
-            return
         if len(l) == 1:
             answer[0].append(l[0][2])
             answer[1].append(l[0][2])
@@ -16,8 +14,12 @@ def solution(nodeinfo):
                 maxy = l[i][1]
                 idx = i
         answer[0].append(l[idx][2])
-        sol(l[:idx])
-        sol(l[idx+1:])
+        left = l[:idx]
+        right = l[idx+1:]
+        if left:
+            sol(left)
+        if right:
+            sol(right)
         answer[1].append(l[idx][2])
 
     nodeinfo = [(x, y, i + 1) for i, (x, y) in enumerate(nodeinfo)]
