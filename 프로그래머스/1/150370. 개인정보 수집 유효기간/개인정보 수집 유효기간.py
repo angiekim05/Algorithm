@@ -1,20 +1,21 @@
+def to_days(date):
+    y, m, d = map(int, date.split("."))
+    return y*12*28 + m*28 + d
+
 def solution(today, terms, privacies):
     answer = []
-    y, m, d = map(int, today.split("."))
-    today = y*12*28 + m*28 + d
+    today = to_days(today)
     
     term = dict()
     for t in terms:
         type_, period = t.split()
-        term[type_] = int(period)
+        term[type_] = int(period)*28
     
     for idx, p in enumerate(privacies):
         numb = idx+1
         date, type_ = p.split()
-        y, m, d = map(int, date.split("."))
-        m += term[type_]
         
-        if y*12*28 + m*28 + d <= today:
+        if to_days(date) + term[type_] <= today:
             answer.append(numb)
     
     return answer
