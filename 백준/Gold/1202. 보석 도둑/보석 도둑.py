@@ -1,19 +1,19 @@
 import heapq
 import sys
 input = sys.stdin.readline
-
-n,k = map(int,input().split())
-jewels = [list(map(int, input().split())) for _ in range(n)]
-jewels.sort(key = lambda x: (-x[0],x[1]))
+n,k = map(int, input().split())
+gems = [tuple(map(int, input().split())) for _ in range(n)]
 bags = [int(input()) for _ in range(k)]
+gems.sort(reverse=True)
 bags.sort()
-
-q = []
+pq = []
 answer = 0
-for b in bags:
-    while jewels and b >= jewels[-1][0]:
-        w,v = jewels.pop()
-        heapq.heappush(q,-v)
-    if q:
-        answer += -heapq.heappop(q)
+for x in bags:
+    while gems:
+        if gems[-1][0] > x:
+            break
+        nm,nv = gems.pop()
+        heapq.heappush(pq,-nv)
+    if pq:
+        answer -= heapq.heappop(pq)
 print(answer)
