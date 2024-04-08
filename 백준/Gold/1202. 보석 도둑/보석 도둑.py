@@ -3,7 +3,6 @@ from collections import defaultdict
 import sys
 input = sys.stdin.readline
 n,k = map(int, input().split())
-# 동일 무게에 대해 묶음으로써 동시에 포함되지 않는 무게의 보석들을 제거 가능
 gems = defaultdict(list)
 for _ in range(n):
     m,v = map(int, input().split())
