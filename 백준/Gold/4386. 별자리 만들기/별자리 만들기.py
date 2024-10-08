@@ -21,7 +21,7 @@ def union(x,y):
 n = int(input())
 nodes = []
 edges = []
-parent = list(range(n+1))
+parent = list(range(n))
 res = 0
 for i in range(n):
     nodes.append(list(map(float,input().split())))
