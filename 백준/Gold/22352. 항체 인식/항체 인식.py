@@ -1,6 +1,4 @@
 import sys
-from collections import deque
-
 input = sys.stdin.readline
 
 n,m = map(int,input().split())
@@ -14,11 +12,11 @@ def in_range(x,y):
 def check_area(i,j):
     before_color = arr1[i][j]
     after_color = arr2[i][j]
-    q = deque([(i,j)])
+    stack = [(i,j)]
     visited[i][j] = 1
 
-    while q:
-        x, y = q.popleft()
+    while stack:
+        x, y = stack.pop()
 
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x+dx, y+dy
@@ -30,7 +28,7 @@ def check_area(i,j):
             if arr1[nx][ny] == before_color:
                 if arr2[nx][ny] == after_color:
                     visited[nx][ny] = 1
-                    q.append((nx,ny))
+                    stack.append((nx,ny))
                 else: # 모든 영역이 같은 값으로 업데이트되지 않으면 CPCU-1202 백신이 아님
                     print("NO")
                     exit()
