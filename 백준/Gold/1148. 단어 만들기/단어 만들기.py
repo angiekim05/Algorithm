@@ -1,7 +1,6 @@
 import sys
 input = sys.stdin.readline
 
-words = [[] for _ in range(26)]
 words_dict = dict()
 def add_word(word):
     temp = dict()
@@ -10,8 +9,6 @@ def add_word(word):
             temp[x] += 1
         else:
             temp[x] = 1
-            words[ord(x)-65].append(word)
-
     words_dict[word] = temp
     return
 
@@ -54,17 +51,9 @@ while True:
     can_make = set()
     can_not_make = set()
     puzzle_count = {t:0 for t in puzzle_dict.keys()}
-    for x in puzzle_dict:
-        for word in words[ord(x)-65]:
-            if word in can_make:
+    for word in words_dict:
+        if can_make_word(puzzle_dict, words_dict[word]):
+            for x in words_dict[word]:
                 puzzle_count[x] += 1
-            elif word in can_not_make:
-                continue
-            else:
-                if can_make_word(puzzle_dict, words_dict[word]):
-                    can_make.add(word)
-                    puzzle_count[x] += 1
-                else:
-                    can_not_make.add(word)
 
     print_answer(puzzle_count)
